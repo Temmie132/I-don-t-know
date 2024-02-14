@@ -1,0 +1,27 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const character = document.getElementById('character');
+  const spike = document.getElementById('spike');
+
+  let isJumping = false;
+
+  document.addEventListener('click', () => {
+    if (!isJumping) {
+      isJumping = true;
+      character.style.bottom = '100px';
+      setTimeout(() => {
+        character.style.bottom = '0px';
+        isJumping = false;
+      }, 500);
+    }
+  });
+
+  const checkGameOver = setInterval(() => {
+    const characterBottom = parseInt(window.getComputedStyle(character).getPropertyValue('bottom'));
+    const spikeRight = parseInt(window.getComputedStyle(spike).getPropertyValue('right'));
+
+    if (characterBottom <= 100 && spikeRight === 0) {
+      clearInterval(checkGameOver);
+      alert('Game Over! You hit the spike.');
+    }
+  }, 10);
+});
